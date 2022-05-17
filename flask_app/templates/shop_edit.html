@@ -14,11 +14,13 @@
                 <h1>Welcome {{user.first_name}}, Let's setup your shop!</h1>
             </div>
             <div class="col-2 d-flex justify-content-end">
+                <a href="/dashboard" class="btn btn-primary border border-dark" style="height:2.5rem;">Dashbaord</a>
                 <a href="/reset" class="btn btn-primary border border-dark" style="height:2.5rem;">Logout</a>
             </div>
         </div>
         <hr>
-        <form action="/create_shop" method="post" class="col-6" enctype="multipart/form-data">
+        <form action="/update_shop" method="post" class="col-6" enctype="multipart/form-data">
+            <input type="hidden" name="id" value={{shop.id}}>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <p></p>
@@ -30,7 +32,7 @@
 
             <div class="form-group">
                 <label for="name">Shop Name:</label>
-                <input type="text" class="form-control" name="name" required>
+                <input type="text" class="form-control" name="name" value="{{shop.name}}" required>
             </div>
             <div class="form-group">
                 <label for="banner">Banner:</label>
@@ -38,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label for="tag">Tag Line:</label>
-                <input type="text" class="form-control" name="tag" required>
+                <input type="text" class="form-control" name="tag" value="{{shop.tag_line}}" required>
             </div>
             <div class="form-group">
                 <label for="pic1">Carousel 1:</label>

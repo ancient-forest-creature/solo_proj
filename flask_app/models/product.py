@@ -45,7 +45,7 @@ class Product:
 
     def get_all(cls, data):
         data = {'id':data}
-        query = "SELECT * FROM products LEFT JOIN shops ON products.id = shops.id WHERE shops.id = %(id)s;"
+        query = "SELECT * FROM products LEFT JOIN shops ON products.shop_id = shops.id WHERE shops.id = %(id)s;"
         res = connectToMySQL(cls.db_name).query_db(query, data)
         products = []
         print(res)
@@ -99,7 +99,7 @@ class Product:
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE products SET title=%(title)s, description=%(description)s, img1=%(img1)s, img2=%(img2)s, type=%(type)s, shop_id=%(shop_id)s, price=%(price)s, quantity=%(quantity)s, purchaser=%(purchaser)s, order=%(order)s, updated_at=NOW() WHERE id = %(id)s;"
+        query = "UPDATE products SET title=%(title)s, description=%(description)s, img1=%(img1)s, img2=%(img2)s, type=%(type)s, shop_id=%(shop_id)s, price=%(price)s, quantity=%(quantity)s, updated_at=NOW() WHERE id = %(id)s;"
         result = connectToMySQL(cls.db_name).query_db(query, data)
         print(f"send msg create result is {result}")
         return result
@@ -124,7 +124,7 @@ class Product:
         if len(product["type"]) < 1:
             flash("You must input a type", "product_err")
             is_valid=False           
-        if int(product["price"]) < 1:
+        if float(product["price"]) < 1:
             flash("Price cannot be empty", "product_err")
             is_valid=False
         if int(product["quantity"]) < 1:

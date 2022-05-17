@@ -14,11 +14,11 @@
                 <h1>{{shop.name}}'s Dashboard</h1>
             </div>
             <div class="col-2">
-                <a href="/dashboard" class="btn btn-primary border border-dark" style="height:2.5rem;">Dashbaord</a>
-                <a href="/reset" class="btn btn-primary border border-dark" style="height:2.5rem;">Logout</a>
+                <a href="/edit/{{shop.id}}" class="btn btn-secondary border border-dark" style="height:2.5rem;">Edit Shop</a>
+                <a href="/reset" class="btn btn-secondary border border-dark" style="height:2.5rem;">Logout</a>
             </div>
         </div>
-        <div class="border border-dark p-3 mt-5">
+        <div class="p-3 mt-5">
             <div class="row">
                 <div class="col-12 d-flex mx-auto justify-content-center mt-3">
                     <img src="{{ url_for('display_image', filename=shop.banner) }}" alt="etsy" style="height:8rem;">
@@ -31,7 +31,7 @@
                    <h1>Products:</h1>
                    {% if products %}
                         {% for product in products %}
-                            <a href="/edit/{{product.id}}"><img src="../static/uploads/{{product.img1}}" alt="etsy" style="height:10rem;"></a>
+                            <a href="/edit_prod/{{product.id}}"><img src="../static/uploads/{{product.img1}}" class="mt-4" alt="etsy" style="height:10rem;"></a>
                             <!-- <img src="{{ url_for('display_image', filename=product.img1) }}" alt="{{product.title}}" style="height:8rem;"> -->
                         {% endfor %}
                     {% endif %}
@@ -39,7 +39,7 @@
             </div>
             <div class="row d-flex mx-auto justify-content-end my-3">
                 <div class="col-2">
-                    <a href="/add" class="btn btn-primary border border-dark" style="height:2.5rem;">Add a Product</a>
+                    <a href="/add" class="btn btn-info border border-dark" style="height:2.5rem;">Add a Product</a>
                 </div>
             </div>
         </div>

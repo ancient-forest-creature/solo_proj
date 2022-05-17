@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row d-flex mx-auto justify-content-between mt-3">
             <div class="col-10">
-                <h1>Add a Product to {{shop.name}}</h1>
+                <h1>Edit {{product.title}}</h1>
             </div>
             <div class="col-2">
                 <a href="/dashboard" class="btn btn-primary border border-dark" style="height:2.5rem;">Dashbaord</a>
@@ -19,48 +19,57 @@
             </div>
         </div>
         <hr>
-        <form action="/update_product" method="post" class="col-6" enctype="multipart/form-data">
-            {% with messages = get_flashed_messages(category_filter=['car_err']) %}
-                {% if messages %}
-                    <p></p>
-                    {% for message in messages %}
-                        <p class="text-danger">{{ message }}</p>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+        <div class="row d-flex mx-auto justify-content-between mt-3">
+            <form action="/update_product" method="post" class="col-6" enctype="multipart/form-data">
+                <input type="hidden" name="id" value={{product.id}}>
+                <input type="hidden" name="img1_backup" value={{product.img1}}>
+                <input type="hidden" name="img2_backup" value={{product.img2}}>
+                {% with messages = get_flashed_messages(category_filter=['car_err']) %}
+                    {% if messages %}
+                        <p></p>
+                        {% for message in messages %}
+                            <p class="text-danger">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
 
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" class="form-control" name="title" value="{{product.title}}">
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" name="description" rows="5">{{product.description}}</textarea>
-            </div>
-            <div class="form-group">
-                <label for="img1">First Image:</label>
-                <input type="file" class="form-control" name="img1" accept="image/*" value="{{product.img1}}">
-            </div>
-            <div class="form-group">
-                <label for="img2">Second Image:</label>
-                <input type="file" class="form-control" name="img2" accept="image/*" value="{{product.img2}}">
-            </div>
-            <div class="form-group">
-                <label for="type">Type:</label>
-                <input type="text" class="form-control" name="type" value="{{product.type}}">
-            </div>
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" min="1" step="any" name="price" class="form-control" value="{{product.price}}">
-             </div>
-            <div class="form-group">
-                <label for="quantity">Quantity:</label>
-                <input type="number" class="form-control" name="quantity" class="form-control" value="{{product.quantity}}">
-            </div>
-            
-            <button type="submit" class="btn btn-primary mt-3">Update</button>
-            <a href="/purchase/{{car.id}}" class="btn btn-primary border border-dark" style="height:2.5rem;">Purchase</a>
-        </form>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" name="title" value="{{product.title}}">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" name="description" rows="5">{{product.description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="img1">First Image:</label>
+                    <input type="file" class="form-control" name="img1" accept="image/*" value="{{product.img1}}">
+                </div>
+                <div class="form-group">
+                    <label for="img2">Second Image:</label>
+                    <input type="file" class="form-control" name="img2" accept="image/*" value="{{product.img2}}">
+                </div>
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <input type="text" class="form-control" name="type" value="{{product.type}}">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" min="1" step="any" name="price" class="form-control" value="{{product.price}}">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" class="form-control" name="quantity" class="form-control" value="{{product.quantity}}">
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-3">Update</button>
+                <a href="/delete_product/{{product.id}}" class="btn btn-danger border border-dark mt-3" style="height:2.5rem;">Delete</a>
+            </form>
+            <div class="col-4 mt-3">
+                <img src="{{ url_for('display_image', filename=product.img1) }}" alt="etsy" style="height: 16rem;">
+                <img src="{{ url_for('display_image', filename=product.img2) }}" class="mt-3" alt="etsy" style="height: 16rem;">
+            </div>       
+        </div>
     </div>
 </body>
     

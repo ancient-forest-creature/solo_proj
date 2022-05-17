@@ -10,13 +10,15 @@ class Shop:
         self.id = data['id']
         self.name = data['name']
         self.banner = data['banner']
+        self.tag_line = data['tag_line']
         self.user = data['user_id']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
     
     @classmethod
-    def get_shop(cls, data):
-        data = {'id':data}
+    def get_shop(cls, id):
+        print(id)
+        data = {'id':id}
         query = "SELECT * FROM shops LEFT JOIN users ON shops.user_id = users.id WHERE users.id = %(id)s;"
         print(query)
         res = connectToMySQL(cls.db_name).query_db(query, data)
@@ -29,15 +31,27 @@ class Shop:
         return shop
 
     @classmethod
+    def get_all_shops(cls):
+        query = "SELECT * FROM shops"
+        print(query)
+        res = connectToMySQL(cls.db_name).query_db(query)
+        print("res is :")
+        print(res)
+        shops = []
+        for shop in res:
+            shops.append(cls(shop))
+        return shops
+
+    @classmethod
     def create(cls, data):
-        query = "INSERT INTO shops (name, banner, user_id) VALUES (%(name)s, %(banner)s, %(user_id)s);"
+        query = "INSERT INTO shops (name, banner, tag_line, user_id) VALUES (%(name)s, %(banner)s, %(tag_line)s, %(user_id)s);"
         result = connectToMySQL(cls.db_name).query_db(query, data)
         print(f"send msg create result is {result}")
         return result
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE shops SET name=%(name)s, banner=%(banner)s, user_id=%(user)s, updated_at=NOW() WHERE id = %(id)s;"
+        query = "UPDATE shops SET name=%(name)s, banner=%(banner)s, tag_line=%(tag_line)s, user_id=%(user)s, updated_at=NOW() WHERE id = %(id)s;"
         result = connectToMySQL(cls.db_name).query_db(query, data)
         print(f"send msg create result is {result}")
         return result

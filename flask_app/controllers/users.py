@@ -11,10 +11,6 @@ bcrypt = Bcrypt(app)
 def admin():
     return render_template('index.html')
 
-@app.route('/')
-def default():
-    return render_template('index.html')
-
 @app.route('/create', methods=['POST'])
 def create_user():
     print("create reuest from is:")
@@ -46,27 +42,6 @@ def login():
         return redirect('/')
     session['user_id'] = user.id    
     return redirect('/dashboard')
-
-
-@app.route('/dashboard')
-def success():
-    if 'user_id' not in session:
-        flash("Please login to view content","bad_user")
-        return redirect('/')
-    # print(f"dashboard session userid is: {session['user_id']}")
-    user = User.get_user(session['user_id'])
-    shop = Shop.get_shop(session['user_id'])
-    if shop != None:
-        products = Product.get_all(shop.id)
-    print('success result is:')
-    print(shop)
-    # print(messages[0])
-    if shop == None:
-        return render_template('shop_setup.html', user = user)
-    elif products == None:
-        return render_template('dashboard.html', user = user, shop = shop)
-    else:
-        return render_template('dashboard.html', user = user, shop = shop, products = products)
 
 @app.route('/reset')
 def reset():
